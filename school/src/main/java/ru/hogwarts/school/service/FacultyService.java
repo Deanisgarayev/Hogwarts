@@ -10,7 +10,7 @@ public class FacultyService {
     private final Map<Long, Faculty> faculties = new HashMap<>();
 
 
-    private Long lastId = 0L;
+    private long lastId = 0;
 
     public Faculty writeFaculty(Faculty faculty) {
         faculty.setId(++lastId);

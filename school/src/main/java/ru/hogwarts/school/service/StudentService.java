@@ -10,7 +10,7 @@ public class StudentService {
     private final Map<Long, Student> students = new HashMap<>();
 
 
-    private Long lastId = 0L;
+    private long lastId = 0;
 
     public Student writeStudent(Student student) {
         student.setId(++lastId);
