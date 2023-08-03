@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.function.LongToIntFunction;
 
 @RestController
@@ -28,6 +30,14 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.ok(student);
+    }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> findByAge(@RequestParam(required = false) int age) {
+        if (age > 0) {
+            return ResponseEntity.ok(studentService.findByAge(age));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
     }
     @PutMapping
     public ResponseEntity<Student> changeStudent(@RequestBody Student student) {
