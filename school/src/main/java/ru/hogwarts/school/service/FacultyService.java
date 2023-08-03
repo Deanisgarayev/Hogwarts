@@ -3,14 +3,13 @@ package ru.hogwarts.school.service;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 
+import java.util.HashMap;
 import java.util.Map;
 @Service
 public class FacultyService {
-    Map<Long, Faculty> faculties;
+    private final Map<Long, Faculty> faculties = new HashMap<>();
 
-    public FacultyService(Map<Long, Faculty> faculties) {
-        this.faculties = faculties;
-    }
+
     private Long lastId = 0L;
 
     public Faculty writeFaculty(Faculty faculty) {
