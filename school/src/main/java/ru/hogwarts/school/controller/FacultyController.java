@@ -34,13 +34,13 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-//    @GetMapping
-//    public ResponseEntity<Collection<Faculty>> findByFaculty(@RequestParam String color) {
-//        if (color != null && !color.isBlank()) {
-//            return ResponseEntity.ok(facultyService.findByColor(color));
-//        }
-//        return ResponseEntity.ok(Collections.emptyList());
-//    }
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findByFaculty(@RequestParam String color) {
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByColor(color));
+        }
+        return ResponseEntity.ok(Collections.emptyList());
+    }
 
     @PutMapping
     public ResponseEntity<Faculty> changeFaculty(@RequestBody Faculty faculty) {

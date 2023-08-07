@@ -1,17 +1,16 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
 @Service
 public class StudentService {
     private final StudentRepository studentRepository;
-
+@Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -24,15 +23,9 @@ public class StudentService {
         return studentRepository.findById(id).get();
     }
 
-//    public Collection<Student> findByAge(int age) {
-//        ArrayList<Student> result = new ArrayList<>();
-//        for (Student student : students.values()) {
-//            if (student.getAge() == age) {
-//                result.add(student);
-//            }
-//        }
-//        return result;
-//    }
+    public List<Student> findByAge(int age) {
+        return studentRepository.findByAge(age);
+    }
 
     public Student changeStudent(Student student) {
         return studentRepository.save(student);
