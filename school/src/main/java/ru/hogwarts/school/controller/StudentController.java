@@ -48,6 +48,11 @@ public class StudentController {
         return ResponseEntity.ok(student);
         }
 
+//    @GetMapping
+//    public ResponseEntity<Collection<Student>> findAllStudents() {
+//        return ResponseEntity.ok(studentService.findAllStudents());
+//    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
          studentService.removeStudent(id);

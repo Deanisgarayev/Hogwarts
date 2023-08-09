@@ -15,6 +15,9 @@ public class FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
+    public Collection<Faculty> findAllFaculties() {
+        return facultyRepository.findAll();
+    }
     public Faculty writeFaculty(Faculty faculty) {
         return facultyRepository.save(faculty) ;
     }

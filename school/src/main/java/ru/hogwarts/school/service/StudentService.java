@@ -15,6 +15,10 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
+    public Collection<Student> findAllStudents() {
+        return studentRepository.findAll();
+    }
+
     public Student writeStudent(Student student) {
         return studentRepository.save(student);
     }

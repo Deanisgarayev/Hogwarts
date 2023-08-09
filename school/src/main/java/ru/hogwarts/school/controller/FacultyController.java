@@ -42,6 +42,11 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+//    @GetMapping
+//    public ResponseEntity<Collection<Faculty>> findAllFaculties() {
+//        return ResponseEntity.ok(facultyService.findAllFaculties());
+//    }
+
     @PutMapping
     public ResponseEntity<Faculty> changeFaculty(@RequestBody Faculty faculty) {
         Faculty foundfaculty = facultyService.changeFaculty(faculty);
@@ -50,8 +55,9 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty);
     }
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Faculty> removefaculty(@PathVariable Long id) {
+    public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
         facultyService.removeFaculty(id);
         return ResponseEntity.ok().build();
     }
