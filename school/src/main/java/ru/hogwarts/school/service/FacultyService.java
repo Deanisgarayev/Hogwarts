@@ -32,9 +32,11 @@ public class FacultyService {
     }
 
     public Collection<Faculty> findByPart(String part) {
-        return facultyRepository.findAllByNameContainsIgnoreCase(part);
+        return facultyRepository.findByNameContainsIgnoreCase(part);
     }
-
+    //    public Collection<Faculty> findByPart(String name, String color) {
+//        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+//    }
     public Faculty changeFaculty(Faculty faculty) {
         return facultyRepository.save(faculty) ;
     }
