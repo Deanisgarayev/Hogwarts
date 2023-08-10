@@ -39,6 +39,11 @@ public class StudentController {
         }
         return ResponseEntity.ok(Collections.emptyList());
     }
+
+    @GetMapping
+    public ResponseEntity<Collection<Student>> findByAgeBetween(int min, int max) {
+        return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
+    }
     @PutMapping
     public ResponseEntity<Student> changeStudent(@RequestBody Student student) {
         Student foundstudent = studentService.changeStudent(student);

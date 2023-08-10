@@ -42,6 +42,16 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+    @GetMapping
+    public ResponseEntity<Collection<Faculty>> findByPart(@RequestParam String name, @RequestParam String color){//, RequestParam String namePart) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByPart(name));
+        }
+        if (color != null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByPart(color));
+        }
+        return ResponseEntity.ok(facultyService.findAllFaculties());
+    }
 //    @GetMapping
 //    public ResponseEntity<Collection<Faculty>> findAllFaculties() {
 //        return ResponseEntity.ok(facultyService.findAllFaculties());

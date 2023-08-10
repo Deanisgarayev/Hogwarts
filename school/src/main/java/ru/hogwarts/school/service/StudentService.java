@@ -15,9 +15,9 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Collection<Student> findAllStudents() {
-        return studentRepository.findAll();
-    }
+//    public Collection<Student> findAllStudents() {
+//        return studentRepository.findAll();
+//    }
 
     public Student writeStudent(Student student) {
         return studentRepository.save(student);
@@ -29,6 +29,10 @@ public class StudentService {
 
     public List<Student> findByAge(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    public Collection<Student> findByAgeBetween(int min, int max ) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 
     public Student changeStudent(Student student) {

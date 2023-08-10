@@ -31,6 +31,10 @@ public class FacultyService {
         return facultyRepository.findByColor(color) ;
     }
 
+    public Collection<Faculty> findByPart(String part) {
+        return facultyRepository.findAllByNameContainsIgnoreCase(part);
+    }
+
     public Faculty changeFaculty(Faculty faculty) {
         return facultyRepository.save(faculty) ;
     }
