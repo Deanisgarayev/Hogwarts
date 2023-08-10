@@ -6,6 +6,9 @@ import javax.persistence.Id;
 import java.util.Objects;
 @Entity
 public class Student {
+    public Student() {
+    }
+
     @Id
     @GeneratedValue
     Long id;
