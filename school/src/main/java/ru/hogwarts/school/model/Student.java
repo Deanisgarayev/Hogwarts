@@ -5,12 +5,15 @@ import java.util.Collection;
 import java.util.Objects;
 @Entity
 public class Student {
+    public Student() {
+    }
+
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name;
-    int age;
+    private String name;
+    private int age;
     @OneToMany(mappedBy = "student")
     private Collection<Faculty> faculties;
 

@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 @Entity
 public class Faculty {
+    public Faculty() {
+    }
     @Id
     @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name;
-    String color;
+    private String name;
+    private String color;
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
