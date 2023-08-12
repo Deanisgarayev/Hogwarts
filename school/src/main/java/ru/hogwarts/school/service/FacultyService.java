@@ -31,12 +31,12 @@ public class FacultyService {
         return facultyRepository.findByColor(color) ;
     }
 
-    public Collection<Faculty> findByPart(String part) {
-        return facultyRepository.findByNameContainsIgnoreCase(part);
-    }
-    //    public Collection<Faculty> findByPart(String name, String color) {
-//        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+//    public Collection<Faculty> findByPart(String part) {
+//        return facultyRepository.findByNameContainsIgnoreCase(part);
 //    }
+        public Collection<Faculty> findByPart(String name, String color) {
+        return facultyRepository.findByNameOrColorIgnoreCase(name, color);
+    }
     public Faculty changeFaculty(Faculty faculty) {
         return facultyRepository.save(faculty) ;
     }
