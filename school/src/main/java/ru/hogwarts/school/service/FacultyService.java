@@ -26,10 +26,10 @@ public class FacultyService {
         return facultyRepository.findById(id).get() ;
     }
 
-    public List<Faculty> findByColor(String color) {
-        List<Faculty> result = new ArrayList<>();
-        return facultyRepository.findByColor(color) ;
-    }
+//    public List<Faculty> findByColor(String color) {
+//        List<Faculty> result = new ArrayList<>();
+//        return facultyRepository.findByColor(color) ;
+//    }
 
 //    public Collection<Faculty> findByPart(String part) {
 //        return facultyRepository.findByNameContainsIgnoreCase(part);

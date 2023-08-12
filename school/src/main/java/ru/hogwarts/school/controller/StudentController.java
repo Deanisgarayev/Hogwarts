@@ -40,10 +40,11 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @GetMapping
+    @GetMapping(params = {"min", "max"})
     public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
     }
+
     @PutMapping
     public ResponseEntity<Student> changeStudent(@RequestBody Student student) {
         Student foundstudent = studentService.changeStudent(student);
@@ -53,10 +54,6 @@ public class StudentController {
         return ResponseEntity.ok(student);
         }
 
-//    @GetMapping
-//    public ResponseEntity<Collection<Student>> findAllStudents() {
-//        return ResponseEntity.ok(studentService.findAllStudents());
-//    }
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {

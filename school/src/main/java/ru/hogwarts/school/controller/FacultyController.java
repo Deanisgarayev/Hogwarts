@@ -34,26 +34,17 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> findByFaculty(@RequestParam String color) {
-        if (color != null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.findByColor(color));
-        }
-        return ResponseEntity.ok(Collections.emptyList());
-    }
-
 //    @GetMapping
-//    public ResponseEntity<Collection<Faculty>> findByPart(@RequestParam String name, @RequestParam String color){//, RequestParam String namePart) {
-//        if (name != null && !name.isBlank()) {
-//            return ResponseEntity.ok(facultyService.findByPart(name));
-//        }
+//    public ResponseEntity<Collection<Faculty>> findByColor(@RequestParam String color) {
 //        if (color != null && !color.isBlank()) {
-//            return ResponseEntity.ok(facultyService.findByPart(color));
+//            return ResponseEntity.ok(facultyService.findByColor(color));
 //        }
-//        return ResponseEntity.ok(facultyService.findAllFaculties());
+//        return ResponseEntity.ok(Collections.emptyList());
 //    }
+
+
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> findByPart(@RequestParam String name, @RequestParam String color){//, RequestParam String namePart) {
+    public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color){
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findByPart(name, color));
         }
@@ -62,10 +53,22 @@ public class FacultyController {
         }
         return ResponseEntity.ok(facultyService.findAllFaculties());
     }
-    @GetMapping
-    public ResponseEntity<Collection<Faculty>> findAllFaculties() {
-        return ResponseEntity.ok(facultyService.findAllFaculties());
-    }
+//    @GetMapping
+//    public ResponseEntity findFaculties(@RequestParam String name, @RequestParam String color, @RequestParam String namePart){
+//        if (name!= null && !name.isBlank()) {
+//            return ResponseEntity.ok(facultyService.findByPart(name));
+//        }
+//        if (color!= null && !color.isBlank()) {
+//            return ResponseEntity.ok(facultyService.findByPart(color));
+//        }
+//        if (namePart!= null && !namePart.isBlank()) {
+//            return ResponseEntity.ok(facultyService.findByPart(namePart));
+//        }
+//
+//        return ResponseEntity.ok(facultyService.findAllFaculties());
+//    }
+
+
 
     @PutMapping
     public ResponseEntity<Faculty> changeFaculty(@RequestBody Faculty faculty) {
