@@ -12,11 +12,11 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
+//@Transactional
 public class StudentService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
-    @Value("${avatars.dir.path}")
+//    @Value("${avatars.dir.path}")
     private String avatarsDir;
 @Autowired
     public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
