@@ -10,6 +10,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.model.Student;
 
+import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import ru.hogwarts.school.service.StudentService;
@@ -25,11 +26,12 @@ import static org.mockito.Mockito.*;
 public class StudentServiceTest {
     private StudentService out;
     private StudentRepository studentRepository;
+    private AvatarRepository avatarRepository;
 
     @BeforeEach
     public void setUp() {
         studentRepository = mock(StudentRepository.class);
-        out = new StudentService(studentRepository);
+        out = new StudentService(studentRepository, avatarRepository);
     }
     private List<Student> students() {
         return List.of(
