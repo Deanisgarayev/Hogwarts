@@ -29,6 +29,7 @@ public class StudentServiceTest {
     private StudentRepository studentRepository;
     private AvatarRepository avatarRepository;
 
+
     @BeforeEach
     public void setUp() {
         studentRepository = mock(StudentRepository.class);
