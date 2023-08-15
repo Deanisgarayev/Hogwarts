@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.model.Student;
@@ -31,6 +32,7 @@ public class StudentServiceTest {
     @BeforeEach
     public void setUp() {
         studentRepository = mock(StudentRepository.class);
+        avatarRepository = mock((AvatarRepository.class));
         out = new StudentService(studentRepository, avatarRepository);
     }
     private List<Student> students() {
@@ -57,6 +59,14 @@ public class StudentServiceTest {
         Student result = out.writeStudent(new Student( 1L,"Harry Potter", 7));
         assertEquals(student, result);
         verify(studentRepository, times(1)).save(new Student(1L, "Harry Potter", 7));
+    }
+
+    @Test
+    public void findAvatar() {
+        when(avatarRepository.findByStudentId(1L)).thenReturn(Optional.of(new Avatar()));
+        out.findAvatar(1L);
+        verify(avatarRepository, times(1)).findByStudentId(1L);
+
     }
     @Test
     public void findStudentTest() {
