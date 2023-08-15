@@ -78,14 +78,14 @@ public class StudentController {
         studentService.uploadAvatar(id,avatar);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(value = "/{id/avatar/preview}")
-    public ResponseEntity<byte[]>downLoadAvatar(@PathVariable Long id) {
-        Avatar avatar = studentService.findAvatar(id);
-        HttpHeaders headers= new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
-        headers.setContentLength(avatar.getData().length);
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
-    }
+//    @GetMapping(value = "/{id/avatar/preview}")
+//    public ResponseEntity<byte[]>downLoadAvatar(@PathVariable Long id) {
+//        Avatar avatar = studentService.findAvatar(id);
+//        HttpHeaders headers= new HttpHeaders();
+//        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
+//        headers.setContentLength(avatar.getData().length);
+//        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+//    }
 
     @GetMapping(value = "/{id}/avatar")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
