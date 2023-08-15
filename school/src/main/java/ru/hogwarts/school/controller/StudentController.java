@@ -78,7 +78,8 @@ public class StudentController {
         studentService.uploadAvatar(id,avatar);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(value = "/{id/avatar/preview}")
+
+    @GetMapping(value = "/{id}/avatar/preview")
     public ResponseEntity<byte[]>downLoadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
         HttpHeaders headers= new HttpHeaders();
