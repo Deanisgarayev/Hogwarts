@@ -34,10 +34,6 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student findStudent(Long id) {
-        return studentRepository.findById(id).get();
-    }
-
     public Avatar findAvatar(Long studentId) {
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
@@ -49,10 +45,10 @@ public class StudentService {
     public Collection<Student> findByAgeBetween(int min, int max ) {
         return studentRepository.findByAgeBetween(min, max);
     }
+
     public Collection<Student> findAllStudents() {
         return studentRepository.findAll();
     }
-
     public Student changeStudent(Student student) {
         return studentRepository.save(student);
     }
@@ -60,9 +56,13 @@ public class StudentService {
     public void removeStudent(Long id) {
         studentRepository.deleteById(id);
     }
+
+    public Student findStudent(Long id) {
+        return studentRepository.findById(id).get();
+    }
     public void uploadAvatar(Long studentID, MultipartFile file) throws IOException{
         Student student = findStudent(studentID);
-        Path filePath = Path.of(avatarsDir, studentID + "." + getExtension(file.getOriginalFilename()));
+        Path filePath = Path.of("./avatar", studentID + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try(InputStream is = file.getInputStream();
