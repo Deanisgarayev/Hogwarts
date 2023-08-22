@@ -52,7 +52,7 @@ public class FacultyControllerWebMvcTest {
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
-        when(facultyRepository.findByNameOrColorIgnoreCase(any(Faculty.class))).thenReturn(Optional.of(faculty));
+//        when(facultyRepository.findByNameOrColorIgnoreCase(any(Faculty.class))).thenReturn(Optional.of(faculty));
         doNothing().when(facultyRepository).deleteById(id);
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -74,8 +74,7 @@ public class FacultyControllerWebMvcTest {
                 .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/faculty/" + id)
-                        .accept(MediaType.APPLICATION_JSON))
+                        .delete("/faculty/" + id))
                 .andExpect(status().isOk());
 
 
