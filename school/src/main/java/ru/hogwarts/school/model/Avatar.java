@@ -11,7 +11,6 @@ import java.util.Objects;
 public class Avatar {
     public Avatar() {
     }
-
     @Id
     @GeneratedValue
     private Long id;
