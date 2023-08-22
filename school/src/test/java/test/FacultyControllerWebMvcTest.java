@@ -19,6 +19,7 @@ import java.awt.*;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,8 +34,9 @@ public class FacultyControllerWebMvcTest {
     private FacultyService facultyService;
     @InjectMocks
     private FacultyController facultyController;
+
     @Test
-    public void  saveTest()throws Exception {
+    public void saveTest() throws Exception {
         final Long id = 1L;
         final String name = "first";
         final String color = "green";
@@ -50,25 +52,31 @@ public class FacultyControllerWebMvcTest {
 
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
         when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findByNameOrColorIgnoreCase(any(Faculty.class))).thenReturn(Optional.of(faculty));
+        doNothing().when(facultyRepository).deleteById(id);
 
         mockMvc.perform(MockMvcRequestBuilders
-                .post("/faculty")
-                .content(facultyObject.toString())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .post("/faculty")
+                        .content(facultyObject.toString())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
 
-                mockMvc.perform(MockMvcRequestBuilders
-                .get("/faculty/" + id)
-                .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/" + id)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
 
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/faculty/" + id)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
 
     }
