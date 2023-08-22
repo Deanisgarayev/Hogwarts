@@ -25,14 +25,11 @@ public class FacultyControllerTestRestTemplate {
     }
     @Test
     public void testPostFaculty() throws Exception {
-//        JSONObject facultyObject = new JSONObject();
-//        facultyObject.put("name", "first");
-//        facultyObject.put("color", "green");
         Faculty faculty = new Faculty();
         faculty.setId(1L);
         faculty.setName("first");
         faculty.setColor("green");
         Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class)).isNotNull();
-        Assertions.assertThat(this.testRestTemplate.delete("http://localhost:" + port + "/faculty" + id, faculty, String.class)).isNotNull();
+        Assertions.assertThat(this.testRestTemplate.delete("http://localhost:" + port + "/faculty",  faculty.getId(1L), String.class)).isNotNull();
     }
 }
