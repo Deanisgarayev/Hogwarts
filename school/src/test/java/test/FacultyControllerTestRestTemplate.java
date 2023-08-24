@@ -31,5 +31,6 @@ public class FacultyControllerTestRestTemplate {
         faculty.setColor("green");
         Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, String.class)).isNotNull();
         Assertions.assertThat(this.testRestTemplate.delete("http://localhost:" + port + "/faculty",  faculty.getId(1L), String.class)).isNotNull();
+//        Assertions.assertThat( this.testRestTemplate.get)
     }
 }

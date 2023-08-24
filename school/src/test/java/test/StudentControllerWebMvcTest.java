@@ -13,9 +13,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,8 +32,11 @@ public class StudentControllerWebMvcTest {
     private MockMvc mockMvc;
     @MockBean
     private StudentRepository studentRepository;
+    @MockBean
+    private AvatarRepository avatarRepository;
     @SpyBean
     private StudentService studentService;
+
     @InjectMocks
     private StudentController studentController;
 
@@ -53,7 +58,10 @@ public class StudentControllerWebMvcTest {
         when(studentRepository.save(any(Student.class))).thenReturn(student);
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
         doNothing().when(studentRepository).deleteById(id);
-
+        when(studentRepository.findByAge(any(Integer.class))).thenReturn(List.of(student));
+//        findByAgeBetween
+//        uploadAvatar
+//        downLoadAvatar
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/student")
                         .content(studentObject.toString())
@@ -75,5 +83,11 @@ public class StudentControllerWebMvcTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/student/"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.age").value(student));
     }
 }
