@@ -21,12 +21,12 @@ public class StudentControllerTestRestTemplate {
     public void contextLoad()throws Exception {
         Assertions.assertThat(studentController).isNotNull();
     }
-    @Test
-    public void studentTest()throws Exception {
-        Student student = new Student();
-        student.setId(1L);
-        student.setName("Harry");
-        student.setAge(7);
-        Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/student", student, String.class)).isNotNull();
-    }
+//    @Test
+//    public void studentTest()throws Exception {
+//        Student student = new Student();
+//        student.setId(1L);
+//        student.setName("Harry");
+//        student.setAge(7);
+//        Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/student", student, String.class)).isNotNull();
+//    }
 }

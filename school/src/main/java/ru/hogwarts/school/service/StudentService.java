@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 @Service
-
+@Transactional
 public class StudentService {
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
