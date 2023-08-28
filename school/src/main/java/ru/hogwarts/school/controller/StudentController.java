@@ -7,6 +7,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.entity.AvgAgeOfStudents;
+import ru.hogwarts.school.entity.CountStudents;
+import ru.hogwarts.school.entity.FiveLastStudents;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -19,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.LongToIntFunction;
 
 @RestController
@@ -28,6 +32,21 @@ public class StudentController {
 @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
+    }
+
+    @GetMapping("/avgAgeOfStudents")
+    public List<AvgAgeOfStudents> getAvgAgeOfStudents() {
+        return studentService.getAvgAgeOfStudents();
+    }
+
+    @GetMapping("/countStudents")
+    public List<CountStudents> getCountStudents() {
+        return studentService.getCountStudents();
+    }
+
+    @GetMapping("/fiveLastStudents")
+    public List<FiveLastStudents> getFiveLastStudents() {
+        return studentService.getFiveLastStudents();
     }
     @PostMapping
     public Student writeStudent(@RequestBody Student student) {

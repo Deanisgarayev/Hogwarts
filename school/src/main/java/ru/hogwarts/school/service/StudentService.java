@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.entity.AvgAgeOfStudents;
+import ru.hogwarts.school.entity.CountStudents;
+import ru.hogwarts.school.entity.FiveLastStudents;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -29,7 +32,17 @@ public class StudentService {
     this.avatarRepository = avatarRepository;
     }
 
+    public List<AvgAgeOfStudents> getAvgAgeOfStudents() {
+        return studentRepository.avgAgeOfStudents();
+    }
 
+    public List<CountStudents> getCountStudents() {
+        return studentRepository.countStudents();
+    }
+
+    public List<FiveLastStudents> getFiveLastStudents() {
+        return studentRepository.fiveLastStudents();
+    }
     public Student writeStudent(Student student) {
         return studentRepository.save(student);
     }
