@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
@@ -46,7 +47,7 @@ public class StudentControllerWebMvcTest {
     private StudentController studentController;
 
     @Test
-    public void wrighStudentyTest() throws Exception {
+    public void wrighStudentyTest()throws Exception{
         final Long id = 1L;
         final String name = "Harry";
         final int age = 7;
@@ -72,7 +73,6 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
     }
-
     @Test
     public void changeStudentTest() throws Exception {
         final Long id = 1L;
@@ -126,7 +126,6 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
     }
-
     @Test
     public void deleteStudentTest() throws Exception {
 
@@ -149,7 +148,6 @@ public class StudentControllerWebMvcTest {
                         .delete("/student/" + id))
                 .andExpect(status().isOk());
     }
-
     @Test
     public void findByAgeTest() throws Exception {
         final Long id = 1L;

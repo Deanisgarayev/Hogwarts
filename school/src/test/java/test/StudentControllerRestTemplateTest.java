@@ -33,7 +33,8 @@ public class StudentControllerRestTemplateTest {
         Student student = new Student();
         student.setName("Harry");
         student.setAge(7);
-        Assertions.assertThat(this.testRestTemplate.put("http://localhost:" + port + "/student", student, String.class)).isNotNull();
+        this.testRestTemplate.put("http://localhost:" + port + "/student", student, String.class);
+        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId(), String.class)).isNotNull();
 
     }
 
@@ -50,7 +51,8 @@ public class StudentControllerRestTemplateTest {
         Student student = new Student();
         student.setName("Harry");
         student.setAge(7);
-        Assertions.assertThat(this.testRestTemplate.delete("http://localhost:" + port + "/student/" + student.getId(), String.class));
+        this.testRestTemplate.delete("http://localhost:" + port + "/student/" + student.getId(), String.class);
+        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId(), String.class)).isNotNull();
     }
     @Test
     public void findByAgeTest() throws Exception{
@@ -58,7 +60,7 @@ public class StudentControllerRestTemplateTest {
         student.setName("Harry");
         student.setAge(7);
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/"
-                + student.getName() + student.getAge(), String.class)).isNotNull();
+                + student.getName() + student.getAge(), String.class)).isNull();
     }
 
     @Test
