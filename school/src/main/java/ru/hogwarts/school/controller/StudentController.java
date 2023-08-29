@@ -89,6 +89,12 @@ public class StudentController {
          studentService.removeStudent(id);
          return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/avatars")
+    public ResponseEntity<List<Avatar>> getPagesOfAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+        List<Avatar> avatars = studentService.getAllAvatars(pageNumber, pageSize);
+        return ResponseEntity.ok(avatars);
+    }
     @PostMapping(value = "/{id}/avatar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
         if (avatar.getSize() > 1024 * 300) {

@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.entity.AvgAgeOfStudents;
@@ -49,6 +50,11 @@ public class StudentService {
 
     public Avatar findAvatar(Long studentId) {
         return avatarRepository.findByStudentId(studentId).orElseThrow();
+    }
+
+    public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 
     public List<Student> findByAge(int age) {
