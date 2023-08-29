@@ -88,6 +88,8 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
+        when(studentRepository.save(any(Student.class))).thenReturn(student);
+
         mockMvc.perform(MockMvcRequestBuilders
 
                         .put("/student")
