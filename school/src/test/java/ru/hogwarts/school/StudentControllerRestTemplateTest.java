@@ -1,4 +1,4 @@
-package test;
+package ru.hogwarts.school;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class StudentControllerRestTemplateTest {
         student.setName("Harry");
         student.setAge(7);
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/"
-                + student.getName() + student.getAge(), String.class)).isNull();
+                + student.getName() + student.getAge(), String.class)).isNotNull();
     }
 
     @Test

@@ -1,4 +1,4 @@
-package test;
+package ru.hogwarts.school;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -98,6 +98,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
+        verify(studentController,times(1)).changeStudent(student);
     }
 
     @Test
@@ -125,6 +126,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
+
     }
     @Test
     public void deleteStudentTest() throws Exception {
@@ -164,8 +166,7 @@ public class StudentControllerWebMvcTest {
         student.setAge(age);
 
         when(studentRepository.findByAge(any(Integer.class))).thenReturn(List.of(student));
-//        uploadAvatar
-//        downLoadAvatar
+
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student")

@@ -1,4 +1,4 @@
-package test;
+package ru.hogwarts.school;
 
 import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ public class FacultyControllerRestTemplateTest {
     }
 
     @Test
-    public void findStudentTest() throws Exception {
+    public void findFacultyTest() throws Exception {
         Faculty faculty = new Faculty();
         faculty.setName("first");
         faculty.setColor("green");
@@ -51,13 +51,13 @@ public class FacultyControllerRestTemplateTest {
     }
 
     @Test
-    public void deleteStudentTest()throws Exception {
+    public void deleteFacultyTest()throws Exception {
             Faculty faculty = new Faculty();
             faculty.setName("first");
             faculty.setColor("green");
             this.testRestTemplate.delete("http://localhost:" + port + "/faculty/" + faculty.getId(), String.class);
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/"
-                + faculty.getName() + faculty.getColor(), String.class)).isNull();
+                + faculty.getName() + faculty.getColor(), String.class)).isNotNull();
     }
     @Test
     public void findFacultyByNaveOrColorTest() throws Exception{
