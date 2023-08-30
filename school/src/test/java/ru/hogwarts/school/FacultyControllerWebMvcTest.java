@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
@@ -22,8 +23,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,6 +75,7 @@ public class FacultyControllerWebMvcTest {
             final String color = "green";
 
             JSONObject facultyObject = new JSONObject();
+            facultyObject.put("id", 1);
             facultyObject.put("name", "first");
             facultyObject.put("color", "green");
 
@@ -81,6 +83,9 @@ public class FacultyControllerWebMvcTest {
             faculty.setId(id);
             faculty.setName(name);
             faculty.setColor(color);
+
+            when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
+
             mockMvc.perform(MockMvcRequestBuilders
 
                             .put("/faculty")
@@ -92,6 +97,8 @@ public class FacultyControllerWebMvcTest {
                     .andExpect(jsonPath("$.name").value(name))
                     .andExpect(jsonPath("$.color").value(color));
         }
+
+
         @Test
         public void findFacultyTest() throws Exception {
 

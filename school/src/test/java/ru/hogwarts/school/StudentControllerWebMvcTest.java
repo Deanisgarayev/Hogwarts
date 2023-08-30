@@ -80,6 +80,7 @@ public class StudentControllerWebMvcTest {
         final int age = 7;
 
         JSONObject studentObject = new JSONObject();
+        studentObject.put("id", 1);
         studentObject.put("name", "Harry");
         studentObject.put("age", 7);
 
@@ -100,7 +101,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
-        verify(studentController,times(1)).changeStudent(student);
+        verify(studentRepository,times(1)).save(student);
     }
 
     @Test
