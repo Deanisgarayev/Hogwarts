@@ -120,7 +120,7 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
+        when(studentRepository.findById(id)).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/" + id)
@@ -168,13 +168,16 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        when(studentRepository.findByAge(any(Integer.class))).thenReturn(List.of(student));
+        when(studentRepository.findByAge(age)).thenReturn(List.of(student));
 
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.age").value(age));
     }
 
     @Test
