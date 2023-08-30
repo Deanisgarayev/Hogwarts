@@ -6,4 +6,5 @@ public interface FiveLastStudents {
     String getName();
 
     int getAge();
+
 }
