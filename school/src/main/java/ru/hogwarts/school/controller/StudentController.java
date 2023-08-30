@@ -35,12 +35,12 @@ public class StudentController {
     }
 
     @GetMapping("/avgAgeOfStudents")
-    public List<AvgAgeOfStudents> getAvgAgeOfStudents() {
+    public AvgAgeOfStudents getAvgAgeOfStudents() {
         return studentService.getAvgAgeOfStudents();
     }
 
     @GetMapping("/countStudents")
-    public List<CountStudents> getCountStudents() {
+    public CountStudents getCountStudents() {
         return studentService.getCountStudents();
     }
 

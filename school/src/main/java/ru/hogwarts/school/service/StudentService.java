@@ -33,11 +33,11 @@ public class StudentService {
     this.avatarRepository = avatarRepository;
     }
 
-    public List<AvgAgeOfStudents> getAvgAgeOfStudents() {
+    public AvgAgeOfStudents getAvgAgeOfStudents() {
         return studentRepository.avgAgeOfStudents();
     }
 
-    public List<CountStudents> getCountStudents() {
+    public CountStudents getCountStudents() {
         return studentRepository.countStudents();
     }
 
