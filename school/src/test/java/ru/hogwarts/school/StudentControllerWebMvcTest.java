@@ -1,4 +1,4 @@
-package test;
+package ru.hogwarts.school;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -80,6 +80,7 @@ public class StudentControllerWebMvcTest {
         final int age = 7;
 
         JSONObject studentObject = new JSONObject();
+        studentObject.put("id", 1);
         studentObject.put("name", "Harry");
         studentObject.put("age", 7);
 
@@ -87,6 +88,8 @@ public class StudentControllerWebMvcTest {
         student.setId(id);
         student.setName(name);
         student.setAge(age);
+
+        when(studentRepository.save(any(Student.class))).thenReturn(student);
 
         mockMvc.perform(MockMvcRequestBuilders
 
@@ -98,6 +101,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
+        verify(studentRepository,times(1)).save(student);
     }
 
     @Test
@@ -116,7 +120,7 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(student));
+        when(studentRepository.findById(id)).thenReturn(Optional.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student/" + id)
@@ -125,6 +129,7 @@ public class StudentControllerWebMvcTest {
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.age").value(age));
+
     }
     @Test
     public void deleteStudentTest() throws Exception {
@@ -163,14 +168,16 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        when(studentRepository.findByAge(any(Integer.class))).thenReturn(List.of(student));
-//        uploadAvatar
-//        downLoadAvatar
+        when(studentRepository.findByAge(age)).thenReturn(List.of(student));
+
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student")
+                        .get("/student?age=" + age)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(id))
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].age").value(age));
     }
 
     @Test
@@ -189,12 +196,11 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        doNothing().when(studentRepository).findByAgeBetween(1, 10);
+        when(studentRepository.findByAgeBetween(0,10)).thenReturn(List.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/" + 1 + 10))
+                        .get("/student?min=0&max=10"))
                 .andExpect(status().isOk());
-
     }
 }
 

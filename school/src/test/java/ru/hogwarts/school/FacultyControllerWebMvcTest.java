@@ -1,4 +1,4 @@
-package test;
+package ru.hogwarts.school;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
