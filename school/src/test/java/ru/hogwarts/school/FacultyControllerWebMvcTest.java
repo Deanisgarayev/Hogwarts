@@ -166,7 +166,11 @@ public class FacultyControllerWebMvcTest {
         when(facultyRepository.findByNameOrColorIgnoreCase(name, color)).thenReturn(List.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty" + name + color))
+                        .get("/faculty?name=first"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty?color=green"))
                 .andExpect(status().isOk());
 
     }

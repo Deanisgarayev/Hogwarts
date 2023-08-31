@@ -172,12 +172,12 @@ public class StudentControllerWebMvcTest {
 
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student")
+                        .get("/student?age=" + age)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.age").value(age));
+                .andExpect(jsonPath("$[0].id").value(id))
+                .andExpect(jsonPath("$[0].name").value(name))
+                .andExpect(jsonPath("$[0].age").value(age));
     }
 
     @Test
@@ -196,10 +196,10 @@ public class StudentControllerWebMvcTest {
         student.setName(name);
         student.setAge(age);
 
-        doNothing().when(studentRepository).findByAgeBetween(1, 10);
+        when(studentRepository.findByAgeBetween(0,10)).thenReturn(List.of(student));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/" + 1 + 10))
+                        .get("/student?min=0&max=10"))
                 .andExpect(status().isOk());
 
     }
