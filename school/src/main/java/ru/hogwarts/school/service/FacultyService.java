@@ -42,6 +42,6 @@ public class FacultyService {
     }
 
     public void removeFaculty(Long id) {
-         facultyRepository.deleteById(id); ;
+         facultyRepository.deleteById(id);
     }
 }
