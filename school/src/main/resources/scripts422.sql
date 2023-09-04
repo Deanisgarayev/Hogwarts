@@ -1,0 +1,2 @@
+create table car(id integer primary key, mark text, model text, cost text );
+create table human(id integer primary key, name text, age integer, driver_license boolean, car_id integer references car (id));  
