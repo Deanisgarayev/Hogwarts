@@ -33,17 +33,6 @@ public class StudentService {
     this.avatarRepository = avatarRepository;
     }
 
-    public AvgAgeOfStudents getAvgAgeOfStudents() {
-        return studentRepository.avgAgeOfStudents();
-    }
-
-    public CountStudents getCountStudents() {
-        return studentRepository.countStudents();
-    }
-
-    public List<FiveLastStudents> getFiveLastStudents() {
-        return studentRepository.fiveLastStudents();
-    }
     public Student writeStudent(Student student) {
         return studentRepository.save(student);
     }
@@ -52,10 +41,6 @@ public class StudentService {
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
 
-    public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
-        return avatarRepository.findAll(pageRequest).getContent();
-    }
 
     public List<Student> findByAge(int age) {
         return studentRepository.findByAge(age);
