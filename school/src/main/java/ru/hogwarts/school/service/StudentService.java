@@ -1,5 +1,8 @@
 package ru.hogwarts.school.service;
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,7 @@ import java.util.*;
 @Service
 @Transactional
 public class StudentService {
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
     private final StudentRepository studentRepository;
     private final AvatarRepository avatarRepository;
     @Value("${avatars.dir.path}")
@@ -34,38 +38,47 @@ public class StudentService {
     }
 
     public Student writeStudent(Student student) {
+logger.debug("requesting write student: {}", student);
         return studentRepository.save(student);
     }
 
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElseThrow();
+        logger.debug("requesting find student by studentId: {}", studentId);
+    return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
 
 
     public List<Student> findByAge(int age) {
+        logger.debug("requesting find student by age: {}", age);
         return studentRepository.findByAge(age);
     }
 
     public Collection<Student> findByAgeBetween(int min, int max ) {
-        return studentRepository.findByAgeBetween(min, max);
+        logger.debug("requesting find student by age between: {}, {}", min, max);
+    return studentRepository.findByAgeBetween(min, max);
     }
 
     public Collection<Student> findAllStudents() {
-        return studentRepository.findAll();
+        logger.debug("requesting find All students");
+    return studentRepository.findAll();
     }
     public Student changeStudent(Student student) {
-        return studentRepository.save(student);
+        logger.debug("requesting change student: {}", student);
+    return studentRepository.save(student);
     }
 
     public void removeStudent(Long id) {
-        studentRepository.deleteById(id);
+        logger.debug("requesting delete student by id: {}", id);
+    studentRepository.deleteById(id);
     }
 
     public Student findStudent(Long id) {
-        return studentRepository.findById(id).get();
+        logger.debug("requesting find student by id: {}", id);
+    return studentRepository.findById(id).get();
     }
     public void uploadAvatar(Long studentID, MultipartFile file) throws IOException{
-        Student student = findStudent(studentID);
+        logger.debug("requesting upload avatar by studentId: {}, and file: {}", studentID, file);
+    Student student = findStudent(studentID);
         Path filePath = Path.of("./avatar", studentID + "." + getExtension(file.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
@@ -86,7 +99,8 @@ public class StudentService {
     }
 
     private String getExtension(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
+        logger.debug("requesting extension file name: {}", fileName);
+    return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
 
