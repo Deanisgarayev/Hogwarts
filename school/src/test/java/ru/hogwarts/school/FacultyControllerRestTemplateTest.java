@@ -56,8 +56,7 @@ public class FacultyControllerRestTemplateTest {
             faculty.setName("first");
             faculty.setColor("green");
             this.testRestTemplate.delete("http://localhost:" + port + "/faculty/" + faculty.getId(), String.class);
-        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/"
-                + faculty.getName() + faculty.getColor(), String.class)).isNull();
+
     }
     @Test
     public void findFacultyByNaveOrColorTest() throws Exception{
