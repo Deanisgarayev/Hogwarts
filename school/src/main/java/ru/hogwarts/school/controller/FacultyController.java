@@ -9,6 +9,9 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/faculty")
@@ -85,5 +88,9 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/long_name")
+    public List<Faculty> findFacultiesWithLongName() {
+        return facultyService.findFacultiesWithLongName();
+    }
 
 }

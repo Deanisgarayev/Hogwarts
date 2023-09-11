@@ -23,7 +23,9 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.function.LongToIntFunction;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
@@ -106,5 +108,13 @@ public class StudentController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+    @GetMapping("/names_by_alphabet")
+    public List<Student> findStudentsByAlphabet() {
+        return studentService.findStudentsByAlphabet();
+    }
+    @GetMapping("/avg_age")
+    public OptionalDouble findAvgAgeOfStudents() {
+        return studentService.findAvgAgeOfStudents();
     }
 }

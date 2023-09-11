@@ -8,6 +8,8 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
@@ -53,4 +55,10 @@ public class FacultyService {
         logger.debug("requesting delete faculty by id: {}", id);
     facultyRepository.deleteById(id);
     }
+    public List<Faculty>findFacultiesWithLongName() {
+    return facultyRepository.findAll().stream()
+            .filter(faculty -> faculty.getName().length()>10)
+            .collect(Collectors.toList());
+    }
+
 }

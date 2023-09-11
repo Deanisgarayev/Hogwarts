@@ -5,14 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.entity.AvgAgeOfStudents;
-import ru.hogwarts.school.entity.CountStudents;
-import ru.hogwarts.school.entity.FiveLastStudents;
 import ru.hogwarts.school.model.Avatar;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
@@ -22,6 +17,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -101,6 +97,17 @@ logger.debug("requesting write student: {}", student);
     private String getExtension(String fileName) {
         logger.debug("requesting extension file name: {}", fileName);
     return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public List<Student> findStudentsByAlphabet() {
+        return studentRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(student -> student.getName()))
+                .collect(Collectors.toList());
+//                .filter(student -> student.getName().startsWith("A"))
+    }
+    public OptionalDouble findAvgAgeOfStudents() {
+    return studentRepository.findAll().stream().mapToInt(student -> student.getAge()).average();
     }
 }
 
