@@ -89,7 +89,7 @@ public class FacultyController {
     }
 
     @GetMapping("/long_name")
-    public List<Faculty> findFacultiesWithLongName() {
+    public Faculty findFacultiesWithLongName() {
         return facultyService.findFacultiesWithLongName();
     }
 

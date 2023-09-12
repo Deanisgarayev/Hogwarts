@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.NotFound;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
@@ -55,10 +56,13 @@ public class FacultyService {
         logger.debug("requesting delete faculty by id: {}", id);
     facultyRepository.deleteById(id);
     }
-    public List<Faculty>findFacultiesWithLongName() {
+    public Faculty findFacultiesWithLongName() {
     return facultyRepository.findAll().stream()
-            .filter(faculty -> faculty.getName().length()>10)
-            .collect(Collectors.toList());
+//            .filter(faculty -> faculty.getName().length()>10)
+//            .map(faculty -> faculty.getName())
+            .max(Comparator.comparing(faculty -> faculty.getName().length()))
+            .orElseThrow(()-> new NotFound("there are not elements"));
+//            .collect(Collectors.toList());
     }
 
 }

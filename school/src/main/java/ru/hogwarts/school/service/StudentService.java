@@ -102,9 +102,9 @@ logger.debug("requesting write student: {}", student);
     public List<Student> findStudentsByAlphabet() {
         return studentRepository.findAll()
                 .stream()
+                .filter(student -> student.getName().startsWith("A"))
                 .sorted(Comparator.comparing(student -> student.getName()))
                 .collect(Collectors.toList());
-//                .filter(student -> student.getName().startsWith("A"))
     }
     public OptionalDouble findAvgAgeOfStudents() {
     return studentRepository.findAll().stream().mapToInt(student -> student.getAge()).average();
