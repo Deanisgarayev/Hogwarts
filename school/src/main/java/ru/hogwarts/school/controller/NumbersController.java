@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.NumberService;
 @RequestMapping("/numbers")
 public class NumbersController {
     NumberService numberService;
+
     @Autowired
     public NumbersController(NumberService numberService) {
         this.numberService = numberService;

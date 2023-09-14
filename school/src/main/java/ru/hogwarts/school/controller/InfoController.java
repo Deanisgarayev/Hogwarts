@@ -12,8 +12,9 @@ import javax.sound.sampled.Port;
 public class InfoController {
     @Value("${service.port}")
     private Integer port;
+
     @GetMapping
-    public Integer getPort( ) {
+    public Integer getPort() {
         return port;
 
     }

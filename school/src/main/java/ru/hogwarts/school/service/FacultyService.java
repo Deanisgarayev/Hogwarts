@@ -16,23 +16,25 @@ import java.util.stream.Stream;
 public class FacultyService {
     private final FacultyRepository facultyRepository;
     Logger logger = LoggerFactory.getLogger(FacultyService.class);
-@Autowired
+
+    @Autowired
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
 
     public Collection<Faculty> findAllFaculties() {
-    logger.debug("requesting find all faculties");
-    return facultyRepository.findAll();
+        logger.debug("requesting find all faculties");
+        return facultyRepository.findAll();
     }
+
     public Faculty writeFaculty(Faculty faculty) {
         logger.debug("requesting write faculty: {}", faculty);
-        return facultyRepository.save(faculty) ;
+        return facultyRepository.save(faculty);
     }
 
     public Faculty findFaculty(Long id) {
         logger.debug("requesting find faculty by id: {}", id);
-    return facultyRepository.findById(id).get() ;
+        return facultyRepository.findById(id).get();
     }
 
 //    public List<Faculty> findByColor(String color) {
@@ -40,28 +42,30 @@ public class FacultyService {
 //        return facultyRepository.findByColor(color) ;
 //    }
 
-//    public Collection<Faculty> findByPart(String part) {
+    //    public Collection<Faculty> findByPart(String part) {
 //        return facultyRepository.findByNameContainsIgnoreCase(part);
 //    }
-        public Collection<Faculty> findByPart(String name, String color) {
-            logger.debug("requesting find faculty by name: {},or color: {}", name, color);
+    public Collection<Faculty> findByPart(String name, String color) {
+        logger.debug("requesting find faculty by name: {},or color: {}", name, color);
         return facultyRepository.findByNameOrColorIgnoreCase(name, color);
     }
+
     public Faculty changeFaculty(Faculty faculty) {
         logger.debug("requesting change faculty: {}", faculty);
-        return facultyRepository.save(faculty) ;
+        return facultyRepository.save(faculty);
     }
 
     public void removeFaculty(Long id) {
         logger.debug("requesting delete faculty by id: {}", id);
-    facultyRepository.deleteById(id);
+        facultyRepository.deleteById(id);
     }
+
     public Faculty findFacultiesWithLongName() {
-    return facultyRepository.findAll().stream()
+        return facultyRepository.findAll().stream()
 //            .filter(faculty -> faculty.getName().length()>10)
 //            .map(faculty -> faculty.getName())
-            .max(Comparator.comparing(faculty -> faculty.getName().length()))
-            .orElseThrow(()-> new NotFound("there are not elements"));
+                .max(Comparator.comparing(faculty -> faculty.getName().length()))
+                .orElseThrow(() -> new NotFound("there are not elements"));
 //            .collect(Collectors.toList());
     }
 

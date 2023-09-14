@@ -47,7 +47,7 @@ public class FacultyController {
 
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color){
+    public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findByPart(name, color));
         }
@@ -70,7 +70,6 @@ public class FacultyController {
 //
 //        return ResponseEntity.ok(facultyService.findAllFaculties());
 //    }
-
 
 
     @PutMapping
