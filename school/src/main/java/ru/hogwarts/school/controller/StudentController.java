@@ -121,15 +121,11 @@ public class StudentController {
 
     @GetMapping("/get_students_with_parallel_streams")
     public void getStudentsWithParallelStreams() {
-        Optional<Student> students = studentService.getStudentsFromParallelStreams();
-        System.out.println(students);
-
+        studentService.getStudentsFromParallelStreams();
     }
 
     @GetMapping("/get_students_with_parallel_synchronized_streams")
-    public void getStudentsWithParallelStreams() {
-        Optional<Student> students = studentService.getStudentsFromParallelSynchronizedStreams();
-        System.out.println(students);
-//
+    public void getStudentsWithParallelSynchronizedStreams() {
+        studentService.getStudentsFromParallelSynchronizedStreams();
     }
 }

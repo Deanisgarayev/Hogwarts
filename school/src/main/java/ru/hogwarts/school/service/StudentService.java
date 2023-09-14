@@ -2,7 +2,6 @@ package ru.hogwarts.school.service;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
-import net.bytebuddy.dynamic.DynamicType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,8 +126,6 @@ public class StudentService {
     public void getAllStudents(long id) {
         Optional<Student> students = studentRepository.findById(id);
         System.out.println(students);
-
-
     }
 
     public void getStudentsFromParallelStreams() {
@@ -142,7 +139,6 @@ public class StudentService {
             studentService.getAllStudents(4L);
             studentService.getAllStudents(5L);
         }).start();
-
     }
 
     public void getStudentsFromParallelSynchronizedStreams() {
@@ -158,7 +154,6 @@ public class StudentService {
             studentService.getAllStudentsSynchronized(4L);
             studentService.getAllStudentsSynchronized(5L);
         }).start();
-
     }
 
     public final Object flag = new Object();
@@ -167,8 +162,6 @@ public class StudentService {
         synchronized (flag) {
             Optional<Student> students = studentRepository.findById(id);
             System.out.println(students);
-
         }
-
     }
 }
