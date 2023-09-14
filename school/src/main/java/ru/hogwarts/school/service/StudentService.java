@@ -25,15 +25,17 @@ import java.util.stream.Collectors;
 @Transactional
 public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
-    private final StudentRepository studentRepository;
-    private final AvatarRepository avatarRepository;
+    private  StudentRepository studentRepository;
+    private  AvatarRepository avatarRepository;
+    private StudentService studentService;
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
+    public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository, StudentService studentService) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
+        this.studentService = studentService;
     }
 
     public StudentService() {
@@ -130,8 +132,6 @@ public class StudentService {
     }
 
     public void getStudentsFromParallelStreams() {
-        StudentService studentService = new StudentService();
-
         studentService.getAllStudents(0L);
         studentService.getAllStudents(1L);
         new Thread(() -> {
@@ -146,9 +146,9 @@ public class StudentService {
     }
 
     public void getStudentsFromParallelSynchronizedStreams() {
-        StudentService studentService = new StudentService();
 
-        studentService.getAllStudentsSynchronized(0L);
+
+        this.studentService.getAllStudentsSynchronized(0L);
         studentService.getAllStudentsSynchronized(1L);
         new Thread(() -> {
             studentService.getAllStudentsSynchronized(2L);
@@ -161,10 +161,10 @@ public class StudentService {
 
     }
 
-    public Object flag = new Object();
+    public final Object flag = new Object();
 
     public void getAllStudentsSynchronized(long id) {
-        synchronized (StudentService.class) {
+        synchronized (flag) {
             Optional<Student> students = studentRepository.findById(id);
             System.out.println(students);
 
