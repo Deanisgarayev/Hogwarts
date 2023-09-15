@@ -26,15 +26,15 @@ public class StudentService {
     Logger logger = LoggerFactory.getLogger(StudentService.class);
     private  StudentRepository studentRepository;
     private  AvatarRepository avatarRepository;
-    private StudentService studentService;
+
     @Value("${avatars.dir.path}")
     private String avatarsDir;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository, StudentService studentService) {
+    public StudentService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
         this.avatarRepository = avatarRepository;
-        this.studentService = studentService;
+
     }
 
     public StudentService() {
@@ -124,41 +124,43 @@ public class StudentService {
 //    public Integer count = 0;
 
     public void getAllStudents(long id) {
+        logger.debug("requesting get student by id: {}", id);
         Optional<Student> students = studentRepository.findById(id);
         System.out.println(students);
     }
 
     public void getStudentsFromParallelStreams() {
-        studentService.getAllStudents(0L);
-        studentService.getAllStudents(1L);
+        this.getAllStudents(49L);
+        this.getAllStudents(50L);
         new Thread(() -> {
-            studentService.getAllStudents(2L);
-            studentService.getAllStudents(3L);
+            this.getAllStudents(52L);
+            this.getAllStudents(57L);
         }).start();
         new Thread(() -> {
-            studentService.getAllStudents(4L);
-            studentService.getAllStudents(5L);
+            this.getAllStudents(59L);
+            this.getAllStudents(65L);
         }).start();
     }
 
     public void getStudentsFromParallelSynchronizedStreams() {
 
 
-        this.studentService.getAllStudentsSynchronized(0L);
-        studentService.getAllStudentsSynchronized(1L);
+        this.getAllStudentsSynchronized(49L);
+        this.getAllStudentsSynchronized(50L);
         new Thread(() -> {
-            studentService.getAllStudentsSynchronized(2L);
-            studentService.getAllStudentsSynchronized(3L);
+            this.getAllStudentsSynchronized(52L);
+            this.getAllStudentsSynchronized(57L);
         }).start();
         new Thread(() -> {
-            studentService.getAllStudentsSynchronized(4L);
-            studentService.getAllStudentsSynchronized(5L);
+            this.getAllStudentsSynchronized(59L);
+            this.getAllStudentsSynchronized(65L);
         }).start();
     }
 
     public final Object flag = new Object();
 
     public void getAllStudentsSynchronized(long id) {
+        logger.debug("requesting get student by id: {}", id);
         synchronized (flag) {
             Optional<Student> students = studentRepository.findById(id);
             System.out.println(students);
