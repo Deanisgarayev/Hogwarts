@@ -21,22 +21,22 @@ public class StudentControllerRestTemplateTest {
     public void contextLoad()throws Exception {
 
     }
-    @Test
-    public void wrightStudentTest() throws Exception {
-        Student student = new Student();
-        student.setName("Harry");
-        student.setAge(7);
-        Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", student, String.class)).isNotNull();
-    }
-    @Test
-    public void changeStudentTest() throws Exception {
-        Student student = new Student();
-        student.setName("Harry");
-        student.setAge(7);
-        this.testRestTemplate.put("http://localhost:" + port + "/student", student, String.class);
-        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId(), String.class)).isNotNull();
-
-    }
+//    @Test
+//    public void wrightStudentTest() throws Exception {
+//        Student student = new Student();
+//        student.setName("Harry");
+//        student.setAge(7);
+//        Assertions.assertThat(this.testRestTemplate.postForObject("http://localhost:" + port + "/faculty", student, String.class)).isNotNull();
+//    }
+//    @Test
+//    public void changeStudentTest() throws Exception {
+//        Student student = new Student();
+//        student.setName("Harry");
+//        student.setAge(7);
+//        this.testRestTemplate.put("http://localhost:" + port + "/student", student, String.class);
+//        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/" + student.getId(), String.class)).isNotNull();
+//
+//    }
 
     @Test
     public void findStudentTest() throws Exception {

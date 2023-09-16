@@ -28,14 +28,13 @@ public class StudentServiceTest {
     private StudentService out;
     private StudentRepository studentRepository;
     private AvatarRepository avatarRepository;
-    private StudentService studentService;
+
 
     @BeforeEach
     public void setUp() {
         studentRepository = mock(StudentRepository.class);
         avatarRepository = mock((AvatarRepository.class));
-        studentService = mock((StudentService.class));
-        out = new StudentService(studentRepository, avatarRepository, studentService);
+        out = new StudentService(studentRepository, avatarRepository);
     }
     private List<Student> students() {
         return List.of(
