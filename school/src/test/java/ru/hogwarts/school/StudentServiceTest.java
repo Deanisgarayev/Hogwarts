@@ -1,26 +1,20 @@
 package ru.hogwarts.school;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Avatar;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.model.Student;
-
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
-
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

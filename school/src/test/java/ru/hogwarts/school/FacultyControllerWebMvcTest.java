@@ -1,8 +1,6 @@
 package ru.hogwarts.school;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.service.FacultyService;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -172,6 +169,27 @@ public class FacultyControllerWebMvcTest {
                         .get("/faculty?color=green"))
                 .andExpect(status().isOk());
 
+    }
+
+    @Test
+    public void findFacultiesWithLongNameTest() throws Exception {
+        final Long id = 1L;
+        final String name = "first";
+        final String color = "green";
+
+        JSONObject facultyObject = new JSONObject();
+        facultyObject.put("name", "first");
+        facultyObject.put("color", "green");
+
+        Faculty faculty = new Faculty();
+        faculty.setId(id);
+        faculty.setName(name);
+        faculty.setColor(color);
+
+        when(facultyRepository.findAll()).thenReturn(List.of(faculty));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty/long_name"))
+                .andExpect(status().isOk());
     }
 
 }
