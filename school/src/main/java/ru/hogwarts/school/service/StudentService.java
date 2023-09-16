@@ -124,8 +124,7 @@ public class StudentService {
 //    public Integer count = 0;
 
     public void getAllStudents(long id) {
-        logger.debug("requesting get student by id: {}", id);
-        Optional<Student> students = studentRepository.findById(id);
+        List<String> students = studentRepository.findById(id).map(student -> student.getName()).stream().collect(Collectors.toList());
         System.out.println(students);
     }
 
@@ -160,9 +159,8 @@ public class StudentService {
     public final Object flag = new Object();
 
     public void getAllStudentsSynchronized(long id) {
-        logger.debug("requesting get student by id: {}", id);
         synchronized (flag) {
-            Optional<Student> students = studentRepository.findById(id);
+            List<String> students = studentRepository.findById(id).map(student -> student.getName()).stream().collect(Collectors.toList());
             System.out.println(students);
         }
     }
