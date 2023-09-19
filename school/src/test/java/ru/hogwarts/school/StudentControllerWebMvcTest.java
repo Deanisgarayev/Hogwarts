@@ -1,8 +1,5 @@
 package ru.hogwarts.school;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Type;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,22 +10,17 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.controller.StudentController;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -200,6 +192,66 @@ public class StudentControllerWebMvcTest {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student?min=0&max=10"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findStudentsByAlphabetTest() throws Exception {
+        final Long id = 1L;
+        final String name = "Alice";
+        final int age = 7;
+
+        JSONObject studentObject = new JSONObject();
+        studentObject.put("name", "Alice");
+        studentObject.put("age", 7);
+
+        Student student = new Student();
+        student.setId(id);
+        student.setName(name);
+        student.setAge(age);
+
+        when(studentRepository.findAll()).thenReturn(List.of(student));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/names_by_alphabet"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void findAvgAgeOfStudentsTest() throws Exception {
+        final Long id = 1L;
+        final String name = "Alice";
+        final int age = 7;
+
+        JSONObject studentObject = new JSONObject();
+        studentObject.put("name", "Alice");
+        studentObject.put("age", 7);
+
+        Student student = new Student();
+        student.setId(id);
+        student.setName(name);
+        student.setAge(age);
+
+        when(studentRepository.findAll()).thenReturn(List.of(student));
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/avg_age"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getStudentsWithParallelStreamsTest() throws Exception {
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/get_students_with_parallel_streams"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getStudentsWithParallelSynchronizedStreamsTest() throws Exception {
+
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/student/get_students_with_parallel_synchronized_streams"))
                 .andExpect(status().isOk());
     }
 }

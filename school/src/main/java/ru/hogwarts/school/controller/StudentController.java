@@ -20,38 +20,26 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.LongToIntFunction;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
     public StudentService studentService;
-@Autowired
+
+    @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
 
-    @GetMapping("/avgAgeOfStudents")
-    public AvgAgeOfStudents getAvgAgeOfStudents() {
-        return studentService.getAvgAgeOfStudents();
-    }
 
-    @GetMapping("/countStudents")
-    public CountStudents getCountStudents() {
-        return studentService.getCountStudents();
-    }
-
-    @GetMapping("/fiveLastStudents")
-    public List<FiveLastStudents> getFiveLastStudents() {
-        return studentService.getFiveLastStudents();
-    }
     @PostMapping
     public Student writeStudent(@RequestBody Student student) {
         return studentService.writeStudent(student);
     }
+
     @GetMapping("{id}")
     public ResponseEntity<Student> findStudent(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
@@ -81,33 +69,28 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(student);
-        }
+    }
 
 
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
-         studentService.removeStudent(id);
-         return ResponseEntity.ok().build();
+        studentService.removeStudent(id);
+        return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/avatars")
-    public ResponseEntity<List<Avatar>> getPagesOfAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
-        List<Avatar> avatars = studentService.getAllAvatars(pageNumber, pageSize);
-        return ResponseEntity.ok(avatars);
-    }
-    @PostMapping(value = "/{id}/avatar",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
         if (avatar.getSize() > 1024 * 300) {
             return ResponseEntity.badRequest().body("file is too big");
         }
-        studentService.uploadAvatar(id,avatar);
+        studentService.uploadAvatar(id, avatar);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/{id}/avatar/preview")
-    public ResponseEntity<byte[]>downLoadAvatar(@PathVariable Long id) {
+    public ResponseEntity<byte[]> downLoadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
-        HttpHeaders headers= new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
@@ -124,5 +107,25 @@ public class StudentController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @GetMapping("/names_by_alphabet")
+    public List<Student> findStudentsByAlphabet() {
+        return studentService.findStudentsByAlphabet();
+    }
+
+    @GetMapping("/avg_age")
+    public OptionalDouble findAvgAgeOfStudents() {
+        return studentService.findAvgAgeOfStudents();
+    }
+
+    @GetMapping("/get_students_with_parallel_streams")
+    public void getStudentsWithParallelStreams() {
+        studentService.getStudentsFromParallelStreams();
+    }
+
+    @GetMapping("/get_students_with_parallel_synchronized_streams")
+    public void getStudentsWithParallelSynchronizedStreams() {
+        studentService.getStudentsFromParallelSynchronizedStreams();
     }
 }

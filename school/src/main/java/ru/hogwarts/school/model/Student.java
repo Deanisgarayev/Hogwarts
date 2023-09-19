@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
+
 @Entity
 @Table(name = "student")
 public class Student {

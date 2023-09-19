@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Objects;
+
 @Entity
 public class Faculty {
     public Faculty() {
     }
+
     @Id
     @GeneratedValue
     private Long id;

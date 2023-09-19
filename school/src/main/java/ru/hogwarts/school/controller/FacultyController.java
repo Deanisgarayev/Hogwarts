@@ -9,6 +9,9 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/faculty")
@@ -44,7 +47,7 @@ public class FacultyController {
 
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color){
+    public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findByPart(name, color));
         }
@@ -69,7 +72,6 @@ public class FacultyController {
 //    }
 
 
-
     @PutMapping
     public ResponseEntity<Faculty> changeFaculty(@RequestBody Faculty faculty) {
         Faculty foundfaculty = facultyService.changeFaculty(faculty);
@@ -85,5 +87,9 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/long_name")
+    public Faculty findFacultiesWithLongName() {
+        return facultyService.findFacultiesWithLongName();
+    }
 
 }
