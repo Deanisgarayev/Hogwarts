@@ -121,7 +121,6 @@ public class StudentService {
         return studentRepository.findAll().stream().mapToInt(student -> student.getAge()).average();
     }
 
-//    public Integer count = 0;
 
     public void getAllStudents(long id) {
         List<String> students = studentRepository.findById(id).map(student -> student.getName()).stream().collect(Collectors.toList());

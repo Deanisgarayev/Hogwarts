@@ -10,11 +10,13 @@ import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -107,6 +109,15 @@ public class StudentServiceTest {
         Student result = out.findStudent(1L);
         out.removeStudent(1L);
         verify(studentRepository, times(1)).deleteById(1L);
+    }
+    @Test
+    public void findStudentsByAlphabetTest () {
+        assertNotNull(out.findStudentsByAlphabet());
+
+    }
+    @Test
+    public void findAvgAgeOfStudentsTest () {
+        assertNotNull(out.findAvgAgeOfStudents());
     }
 }
 
