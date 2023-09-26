@@ -112,12 +112,21 @@ public class StudentServiceTest {
     }
     @Test
     public void findStudentsByAlphabetTest () {
-        assertNotNull(out.findStudentsByAlphabet());
+        when(studentRepository.save( new Student(1L, "Albert", 7))).thenReturn(new Student(1l, "Albert", 7));
+        when(studentRepository.save( new Student(2L, "Harry Potter", 7))).thenReturn(new Student(2L, "Harry Potter", 7));
+        when(studentRepository.findAll()).thenReturn(List.of(new Student(1L, "Albert", 7), new Student(2L, "Harry Potter", 7)));
+        Student expected = out.writeStudent(new Student(1L, "Albert", 7));
+        out.writeStudent(new Student(2L, "Harry Potter", 7));
+
+        assertEquals(expected.getName(), out.findStudentsByAlphabet().get(0).getName());
 
     }
     @Test
     public void findAvgAgeOfStudentsTest () {
-        assertNotNull(out.findAvgAgeOfStudents());
+
+        when(studentRepository.findAll()).thenReturn(List.of(new Student(1L, "Albert", 7), new Student(2L, "Harry Potter", 7)));
+        assertNotNull( out.findAvgAgeOfStudents());
+        verify(studentRepository, times(1)).findAll();
     }
 }
 
