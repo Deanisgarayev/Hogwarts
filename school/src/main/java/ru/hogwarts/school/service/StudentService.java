@@ -88,7 +88,7 @@ public class StudentService {
         logger.debug("requesting find student by id: {}", id);
         return studentRepository.findById(id).get();
     }
-uploads file to db
+//uploads file to db
     public void uploadAvatar(Long studentID, MultipartFile file) throws IOException {
         logger.debug("requesting upload avatar by studentId: {}, and file: {}", studentID, file);
         Student student = findStudent(studentID);
