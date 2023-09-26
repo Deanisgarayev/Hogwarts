@@ -23,21 +23,22 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
+//finds average age of students from db
     public AvgAgeOfStudents getAvgAgeOfStudents() {
         logger.debug("requesting avg age of students");
         return avatarRepository.avgAgeOfStudents();
     }
-
+//finds total count of students from db
     public CountStudents getCountStudents() {
         logger.debug("requesting count of students");
         return avatarRepository.countStudents();
     }
-
+//finds the 5 last students on the list from bdb
     public List<FiveLastStudents> getFiveLastStudents() {
         logger.debug("requesting five last students");
         return avatarRepository.fiveLastStudents();
     }
-
+//finds all students by pages from db
     public List<Avatar> getAllAvatars(Integer pageNumber, Integer pageSize) {
         logger.debug("requesting all students by page number: {}, and size: {}", pageNumber, pageSize);
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
