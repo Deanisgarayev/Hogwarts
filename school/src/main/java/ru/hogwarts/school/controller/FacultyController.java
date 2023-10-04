@@ -19,7 +19,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-//        add new faculty to the db
+//    add new faculty to the db
     @PostMapping
     public Faculty wrightFaculty(@RequestBody Faculty faculty) {
         return facultyService.writeFaculty(faculty);
@@ -35,7 +35,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-//        find faculty by name or by color from the db
+//    find faculty by name or by color from the db
     @GetMapping
     public ResponseEntity<Collection<Faculty>> findFacultyByNaveOrColor(@RequestParam(required = false) String name, @RequestParam(required = false) String color) {
         if (name != null && !name.isBlank()) {
@@ -47,8 +47,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.findAllFaculties());
     }
 
-
-//        edit faculty at the db
+//    edit faculty at the db
     @PutMapping
     public ResponseEntity<Faculty> changeFaculty(@RequestBody Faculty faculty) {
         Faculty foundfaculty = facultyService.changeFaculty(faculty);
@@ -58,7 +57,7 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-//        delete faculty from the db
+//    delete faculty from the db
     @DeleteMapping("{id}")
     public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
         facultyService.removeFaculty(id);

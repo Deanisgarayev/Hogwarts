@@ -32,13 +32,13 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//        add new student to the db
+//    add new student to the db
     @PostMapping
     public Student writeStudent(@RequestBody Student student) {
         return studentService.writeStudent(student);
     }
 
-//            find student by id from the db
+//    find student by id from the db
     @GetMapping("{id}")
     public ResponseEntity<Student> findStudent(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
@@ -57,13 +57,13 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-//            find students by between min and max age from the db
+//    find students by between min and max age from the db
     @GetMapping(params = {"min", "max"})
     public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
     }
 
-//        edit student at the db
+//    edit student at the db
     @PutMapping
     public ResponseEntity<Student> changeStudent(@RequestBody Student student) {
         Student foundstudent = studentService.changeStudent(student);
@@ -73,13 +73,12 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-//        delete student from the db
+//    delete student from the db
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
-
 //    upload painting format png to the table avatar to the db
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
@@ -114,25 +113,25 @@ public class StudentController {
         }
     }
 
-//            find name of the students starts with a by alphabet from the db
+//    find name of the students starts with a by alphabet from the db
     @GetMapping("/names_by_alphabet")
     public List<Student> findStudentsByAlphabet() {
         return studentService.findStudentsByAlphabet();
     }
 
-//        finds average age of students from the db
+//    finds average age of students from the db
     @GetMapping("/avg_age")
     public OptionalDouble findAvgAgeOfStudents() {
         return studentService.findAvgAgeOfStudents();
     }
 
-//            find students' name by certain ids from the db by using streams
+//    find students' name by certain ids from the db by using streams
     @GetMapping("/get_students_with_parallel_streams")
     public void getStudentsWithParallelStreams() {
         studentService.getStudentsFromParallelStreams();
     }
 
-//            find students' name by certain ids from the db by using synchronized streams
+//    find students' name by certain ids from the db by using synchronized streams
     @GetMapping("/get_students_with_parallel_synchronized_streams")
     public void getStudentsWithParallelSynchronizedStreams() {
         studentService.getStudentsFromParallelSynchronizedStreams();

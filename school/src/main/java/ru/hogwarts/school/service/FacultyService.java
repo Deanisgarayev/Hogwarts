@@ -27,7 +27,7 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
-//        adds new faculty to the db
+//    adds new faculty to the db
     public Faculty writeFaculty(Faculty faculty) {
         logger.debug("requesting write faculty: {}", faculty);
         return facultyRepository.save(faculty);
@@ -39,19 +39,19 @@ public class FacultyService {
         return facultyRepository.findById(id).get();
     }
 
-//        finds faculty by name or by color from the db
+//    finds faculty by name or by color from the db
     public Collection<Faculty> findByPart(String name, String color) {
         logger.debug("requesting find faculty by name: {},or color: {}", name, color);
         return facultyRepository.findByNameOrColorIgnoreCase(name, color);
     }
 
-//        edits faculty at the db
+//    edits faculty at the db
     public Faculty changeFaculty(Faculty faculty) {
         logger.debug("requesting change faculty: {}", faculty);
         return facultyRepository.save(faculty);
     }
 
-//        deletes faculty from the db
+//    deletes faculty from the db
     public void removeFaculty(Long id) {
         logger.debug("requesting delete faculty by id: {}", id);
         facultyRepository.deleteById(id);

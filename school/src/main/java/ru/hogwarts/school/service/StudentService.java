@@ -44,7 +44,7 @@ public class StudentService {
 
     }
 
-//      adds new student to the db
+//    adds new student to the db
     public Student writeStudent(Student student) {
         logger.debug("requesting write student: {}", student);
         return studentRepository.save(student);
@@ -68,31 +68,31 @@ public class StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-//        finds all students from the db
+//    finds all students from the db
     public Collection<Student> findAllStudents() {
         logger.debug("requesting find All students");
         return studentRepository.findAll();
     }
 
-//        edits student at the db
+//    edits student at the db
     public Student changeStudent(Student student) {
         logger.debug("requesting change student: {}", student);
         return studentRepository.save(student);
     }
 
-//        deletes student from the db
+//    deletes student from the db
     public void removeStudent(Long id) {
         logger.debug("requesting delete student by id: {}", id);
         studentRepository.deleteById(id);
     }
 
-//        finds student by id from the db
+//    finds student by id from the db
     public Student findStudent(Long id) {
         logger.debug("requesting find student by id: {}", id);
         return studentRepository.findById(id).get();
     }
 
-//        uploads file to the db
+//    uploads file to the db
     public void uploadAvatar(Long studentID, MultipartFile file) throws IOException {
         logger.debug("requesting upload avatar by studentId: {}, and file: {}", studentID, file);
         Student student = findStudent(studentID);
@@ -115,13 +115,13 @@ public class StudentService {
         avatarRepository.save(avatar);
     }
 
-//          file name gets extended
+//    file name gets extended
     private String getExtension(String fileName) {
         logger.debug("requesting extension file name: {}", fileName);
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-//          finds name of the students starts with a by alphabet from the db
+//    finds name of the students starts with a by alphabet from the db
     public List<Student> findStudentsByAlphabet() {
         return studentRepository.findAll()
                 .stream()
@@ -130,7 +130,7 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-//        finds average age of students from the db
+//    finds average age of students from the db
     public OptionalDouble findAvgAgeOfStudents() {
         return studentRepository.findAll().stream().mapToInt(student -> student.getAge()).average();
     }
@@ -141,7 +141,7 @@ public class StudentService {
         System.out.println(students);
     }
 
-//       finds students' name by certain ids from the db by using streams
+//    finds students' name by certain ids from the db by using streams
     public void getStudentsFromParallelStreams() {
         this.getAllStudents(49L);
         this.getAllStudents(50L);

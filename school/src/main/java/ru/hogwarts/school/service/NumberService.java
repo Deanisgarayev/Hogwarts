@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 @Service
 public class NumberService {
 
-//        gets numbers
+//    gets numbers
     public int numbers() {
         int sum = Stream.iterate(1, a -> a + 1)
                 .limit(1_000_000)
