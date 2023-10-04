@@ -24,21 +24,25 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 
+//    find average age of students from the db
     @GetMapping("/avgAgeOfStudents")
     public AvgAgeOfStudents getAvgAgeOfStudents() {
         return avatarService.getAvgAgeOfStudents();
     }
 
+//    find total count of students from the db
     @GetMapping("/countStudents")
     public CountStudents getCountStudents() {
         return avatarService.getCountStudents();
     }
 
+//    find the 5 last students on the list from the db
     @GetMapping("/fiveLastStudents")
     public List<FiveLastStudents> getFiveLastStudents() {
         return avatarService.getFiveLastStudents();
     }
 
+//    find all students by pages from the db
     @GetMapping("/avatars")
     public ResponseEntity<List<Avatar>> getPagesOfAvatars(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
         List<Avatar> avatars = avatarService.getAllAvatars(pageNumber, pageSize);

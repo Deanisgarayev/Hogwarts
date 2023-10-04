@@ -1,7 +1,5 @@
 package ru.hogwarts.school.service;
 
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +15,13 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
+
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 @Transactional
@@ -41,54 +44,55 @@ public class StudentService {
 
     }
 
-    //finds all students from db
+//      adds new student to the db
     public Student writeStudent(Student student) {
         logger.debug("requesting write student: {}", student);
         return studentRepository.save(student);
     }
 
-    //finds student by id from db
+//    finds avatar by id from the db
     public Avatar findAvatar(Long studentId) {
         logger.debug("requesting find student by studentId: {}", studentId);
         return avatarRepository.findByStudentId(studentId).orElseThrow();
     }
 
-    //finds student by id from db
+//    finds student by age from the db
     public List<Student> findByAge(int age) {
         logger.debug("requesting find student by age: {}", age);
         return studentRepository.findByAge(age);
     }
 
-    //finds students by between min and max age from db
+//    finds students by between min and max age from the db
     public Collection<Student> findByAgeBetween(int min, int max) {
         logger.debug("requesting find student by age between: {}, {}", min, max);
         return studentRepository.findByAgeBetween(min, max);
     }
 
-//    finds all students from db
+//        finds all students from the db
     public Collection<Student> findAllStudents() {
         logger.debug("requesting find All students");
         return studentRepository.findAll();
     }
 
-    //    edits student at db
+//        edits student at the db
     public Student changeStudent(Student student) {
         logger.debug("requesting change student: {}", student);
         return studentRepository.save(student);
     }
 
-//    deletes student from db
+//        deletes student from the db
     public void removeStudent(Long id) {
         logger.debug("requesting delete student by id: {}", id);
         studentRepository.deleteById(id);
     }
 
-//    finds student by id from db
+//        finds student by id from the db
     public Student findStudent(Long id) {
         logger.debug("requesting find student by id: {}", id);
         return studentRepository.findById(id).get();
     }
-//uploads file to db
+
+//        uploads file to the db
     public void uploadAvatar(Long studentID, MultipartFile file) throws IOException {
         logger.debug("requesting upload avatar by studentId: {}, and file: {}", studentID, file);
         Student student = findStudent(studentID);
@@ -111,12 +115,13 @@ public class StudentService {
         avatarRepository.save(avatar);
     }
 
-//file name gets extended
+//          file name gets extended
     private String getExtension(String fileName) {
         logger.debug("requesting extension file name: {}", fileName);
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
-//finds name of the students starts with a by alphabet from db
+
+//          finds name of the students starts with a by alphabet from the db
     public List<Student> findStudentsByAlphabet() {
         return studentRepository.findAll()
                 .stream()
@@ -125,18 +130,18 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-//finds average age of students from db
+//        finds average age of students from the db
     public OptionalDouble findAvgAgeOfStudents() {
         return studentRepository.findAll().stream().mapToInt(student -> student.getAge()).average();
     }
 
-//finds  students' name by id from db
+//    finds students' name by id from the db
     public void getAllStudents(long id) {
         List<String> students = studentRepository.findById(id).map(student -> student.getName()).stream().collect(Collectors.toList());
         System.out.println(students);
     }
 
-    //finds  students' name by certain ids from db synchronized
+//       finds students' name by certain ids from the db by using streams
     public void getStudentsFromParallelStreams() {
         this.getAllStudents(49L);
         this.getAllStudents(50L);
@@ -150,7 +155,7 @@ public class StudentService {
         }).start();
     }
 
-    //finds  students' name by ids from db synchronized
+//    finds students' name by certain ids from the db by using synchronized streams
     public void getStudentsFromParallelSynchronizedStreams() {
 
 
@@ -168,7 +173,7 @@ public class StudentService {
 
     public final Object flag = new Object();
 
-    //finds  students' name by id from db synchronized
+//    finds students' name synchronized by id from the db
     public void getAllStudentsSynchronized(long id) {
         synchronized (flag) {
             List<String> students = studentRepository.findById(id).map(student -> student.getName()).stream().collect(Collectors.toList());
