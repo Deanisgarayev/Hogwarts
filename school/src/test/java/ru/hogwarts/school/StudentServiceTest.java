@@ -10,11 +10,13 @@ import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -107,6 +109,24 @@ public class StudentServiceTest {
         Student result = out.findStudent(1L);
         out.removeStudent(1L);
         verify(studentRepository, times(1)).deleteById(1L);
+    }
+    @Test
+    public void findStudentsByAlphabetTest () {
+        when(studentRepository.save( new Student(1L, "Albert", 7))).thenReturn(new Student(1l, "Albert", 7));
+        when(studentRepository.save( new Student(2L, "Harry Potter", 7))).thenReturn(new Student(2L, "Harry Potter", 7));
+        when(studentRepository.findAll()).thenReturn(List.of(new Student(1L, "Albert", 7), new Student(2L, "Harry Potter", 7)));
+        Student expected = out.writeStudent(new Student(1L, "Albert", 7));
+        out.writeStudent(new Student(2L, "Harry Potter", 7));
+
+        assertEquals(expected.getName(), out.findStudentsByAlphabet().get(0).getName());
+
+    }
+    @Test
+    public void findAvgAgeOfStudentsTest () {
+
+        when(studentRepository.findAll()).thenReturn(List.of(new Student(1L, "Albert", 7), new Student(2L, "Harry Potter", 7)));
+        assertNotNull( out.findAvgAgeOfStudents());
+        verify(studentRepository, times(1)).findAll();
     }
 }
 

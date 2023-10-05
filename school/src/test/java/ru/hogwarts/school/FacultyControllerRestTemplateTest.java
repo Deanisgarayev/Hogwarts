@@ -9,6 +9,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FacultyControllerRestTemplateTest {
     @LocalServerPort
@@ -64,4 +66,13 @@ public class FacultyControllerRestTemplateTest {
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/"
                 + faculty.getName() + faculty.getColor(), String.class)).isNotNull();
     }
+    @Test
+    public void findFacultiesWithLongNameTest() throws Exception{
+        Faculty faculty = new Faculty();
+        faculty.setName("first");
+        faculty.setColor("green");
+        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/faculty/long_name",
+                String.class)).isNotNull();
+    }
 }
+

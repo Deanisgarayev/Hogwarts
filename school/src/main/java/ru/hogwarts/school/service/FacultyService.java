@@ -8,9 +8,8 @@ import ru.hogwarts.school.exception.NotFound;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Collection;
+import java.util.Comparator;
 
 @Service
 public class FacultyService {
@@ -22,51 +21,47 @@ public class FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
+//    finds all faculties from the db
     public Collection<Faculty> findAllFaculties() {
         logger.debug("requesting find all faculties");
         return facultyRepository.findAll();
     }
 
+//    adds new faculty to the db
     public Faculty writeFaculty(Faculty faculty) {
         logger.debug("requesting write faculty: {}", faculty);
         return facultyRepository.save(faculty);
     }
 
+//    finds faculty by id from the db
     public Faculty findFaculty(Long id) {
         logger.debug("requesting find faculty by id: {}", id);
         return facultyRepository.findById(id).get();
     }
 
-//    public List<Faculty> findByColor(String color) {
-//        List<Faculty> result = new ArrayList<>();
-//        return facultyRepository.findByColor(color) ;
-//    }
-
-    //    public Collection<Faculty> findByPart(String part) {
-//        return facultyRepository.findByNameContainsIgnoreCase(part);
-//    }
+//    finds faculty by name or by color from the db
     public Collection<Faculty> findByPart(String name, String color) {
         logger.debug("requesting find faculty by name: {},or color: {}", name, color);
         return facultyRepository.findByNameOrColorIgnoreCase(name, color);
     }
 
+//    edits faculty at the db
     public Faculty changeFaculty(Faculty faculty) {
         logger.debug("requesting change faculty: {}", faculty);
         return facultyRepository.save(faculty);
     }
 
+//    deletes faculty from the db
     public void removeFaculty(Long id) {
         logger.debug("requesting delete faculty by id: {}", id);
         facultyRepository.deleteById(id);
     }
 
+//    finds faculty with the longest name from the db
     public Faculty findFacultiesWithLongName() {
         return facultyRepository.findAll().stream()
-//            .filter(faculty -> faculty.getName().length()>10)
-//            .map(faculty -> faculty.getName())
                 .max(Comparator.comparing(faculty -> faculty.getName().length()))
                 .orElseThrow(() -> new NotFound("there are not elements"));
-//            .collect(Collectors.toList());
     }
 
 }

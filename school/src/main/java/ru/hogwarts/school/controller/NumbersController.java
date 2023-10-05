@@ -16,6 +16,7 @@ public class NumbersController {
         this.numberService = numberService;
     }
 
+//    get numbers
     @GetMapping
     public int numbers() {
         return numberService.numbers();

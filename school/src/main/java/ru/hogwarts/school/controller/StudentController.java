@@ -7,9 +7,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.hogwarts.school.entity.AvgAgeOfStudents;
-import ru.hogwarts.school.entity.CountStudents;
-import ru.hogwarts.school.entity.FiveLastStudents;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -20,9 +17,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.function.LongToIntFunction;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.OptionalDouble;
 
 @RestController
 @RequestMapping("/student")
@@ -34,12 +32,13 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-
+//    add new student to the db
     @PostMapping
     public Student writeStudent(@RequestBody Student student) {
         return studentService.writeStudent(student);
     }
 
+//    find student by id from the db
     @GetMapping("{id}")
     public ResponseEntity<Student> findStudent(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
@@ -49,6 +48,7 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+//    find student by age from the db
     @GetMapping
     public ResponseEntity<Collection<Student>> findByAge(@RequestParam(required = false) int age) {
         if (age > 0) {
@@ -57,11 +57,13 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+//    find students by between min and max age from the db
     @GetMapping(params = {"min", "max"})
     public ResponseEntity<Collection<Student>> findByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return ResponseEntity.ok(studentService.findByAgeBetween(min, max));
     }
 
+//    edit student at the db
     @PutMapping
     public ResponseEntity<Student> changeStudent(@RequestBody Student student) {
         Student foundstudent = studentService.changeStudent(student);
@@ -71,13 +73,13 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-
+//    delete student from the db
     @DeleteMapping("{id}")
     public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
-
+//    upload painting format png to the table avatar to the db
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) throws IOException {
         if (avatar.getSize() > 1024 * 300) {
@@ -87,6 +89,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
+//    download painting by id from the directory avatar
     @GetMapping(value = "/{id}/avatar/preview")
     public ResponseEntity<byte[]> downLoadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
@@ -96,6 +99,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
 
+//    download painting by id from the directory avatar
     @GetMapping(value = "/{id}/avatar")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = studentService.findAvatar(id);
@@ -109,21 +113,25 @@ public class StudentController {
         }
     }
 
+//    find name of the students starts with a by alphabet from the db
     @GetMapping("/names_by_alphabet")
     public List<Student> findStudentsByAlphabet() {
         return studentService.findStudentsByAlphabet();
     }
 
+//    finds average age of students from the db
     @GetMapping("/avg_age")
     public OptionalDouble findAvgAgeOfStudents() {
         return studentService.findAvgAgeOfStudents();
     }
 
+//    find students' name by certain ids from the db by using streams
     @GetMapping("/get_students_with_parallel_streams")
     public void getStudentsWithParallelStreams() {
         studentService.getStudentsFromParallelStreams();
     }
 
+//    find students' name by certain ids from the db by using synchronized streams
     @GetMapping("/get_students_with_parallel_synchronized_streams")
     public void getStudentsWithParallelSynchronizedStreams() {
         studentService.getStudentsFromParallelSynchronizedStreams();

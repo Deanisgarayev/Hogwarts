@@ -254,5 +254,6 @@ public class StudentControllerWebMvcTest {
                         .get("/student/get_students_with_parallel_synchronized_streams"))
                 .andExpect(status().isOk());
     }
+
 }
 
