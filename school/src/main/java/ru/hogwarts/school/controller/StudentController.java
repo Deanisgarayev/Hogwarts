@@ -89,7 +89,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-//    download painting by id from the directory avatar
+//    download painting by id from the directory avatar from bd
     @GetMapping(value = "/{id}/avatar/preview")
     public ResponseEntity<byte[]> downLoadAvatar(@PathVariable Long id) {
         Avatar avatar = studentService.findAvatar(id);
@@ -99,7 +99,7 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
 
-//    download painting by id from the directory avatar
+//    download painting by id from the directory avatar from local disk
     @GetMapping(value = "/{id}/avatar")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = studentService.findAvatar(id);
